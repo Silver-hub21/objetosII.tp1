@@ -15,14 +15,18 @@ public class Concurso {
     }
 
     public boolean estaInscripto(Participante participante) {
-        return inscripciones.contains(inscripciones);
+        return inscripciones.stream()
+                .anyMatch(inscripcion -> inscripcion.esElParticipante(participante));
     }
 
+
     public void inscribir(Inscripcion nuevaInscripcion) throws RuntimeException {
-        if (nuevaInscripcion.estaEnFecha(this.fecha_cierre)) {
+        if (nuevaInscripcion.estaEnFecha(fecha_inicio, fecha_cierre)) {
             inscripciones.add(nuevaInscripcion);
+            nuevaInscripcion.esMismaFecha(fecha_inicio);
         } else {
             throw new RuntimeException("El plazo de inscripción ya finalizó.");
         }
     }
+    
 }
